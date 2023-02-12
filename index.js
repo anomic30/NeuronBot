@@ -107,7 +107,7 @@ client.on("interactionCreate", async (interaction) => {
             interaction.followUp(response);
         } catch (error) {
             console.log(error);
-            interaction.reply("Something went wrong! Please try again later.");
+            interaction.followUp("Something went wrong! Please try again later.");
         }
     } else if (interaction.commandName === "help") {
         interaction.reply("Hey! I am Neuron, an advanced AI bot created by Anom. I am still in the development stage, so please be patient with me :)\n\nTo use me, just type `/ask` and then type your prompt. I will try to answer your question as best as I can.");
@@ -115,8 +115,3 @@ client.on("interactionCreate", async (interaction) => {
 })
 
 client.login(process.env.TOKEN);
-
-//Export the client
-module.exports = {
-    client
-};
