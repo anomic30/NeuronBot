@@ -11,10 +11,10 @@ async function gpt(prompt, messageLogs, clientUserName, interactionUserName){
     try{
         const completion = await openai.createCompletion({
             model: "text-davinci-003",
-            prompt: `    ${clientUserName} is a gpt3 AI bot created by Anom.
-                         ${clientUserName}: Hello, how can I help you?
+            prompt: `    ${clientUserName} is an AI bot created by Anom.
                          ${messageLogs}
                          ${interactionUserName}: ${prompt}
+                         Type your response and dont start with "Neuron: "
                    `,
             temperature: 0.5,
             max_tokens: 200
