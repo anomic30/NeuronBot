@@ -8,10 +8,10 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 async function dalle(prompt, size, style) {
+    if (style) {
+        prompt = prompt + ` in ${style.value} style`;
+    }
     try {
-        if (style) {
-            prompt = prompt + ` in ${style} style`;
-        }
         console.log(prompt);
         const response = await openai.createImage({
             prompt: prompt,

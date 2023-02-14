@@ -131,8 +131,7 @@ client.on("interactionCreate", async (interaction) => {
                 interaction.followUp("Thats too long! Can you please summarize it?");
                 return;
             }
-            console.log(prompt.value, size.value)
-            const response = await dalle(prompt.value, size.value, style.value);
+            const response = await dalle(prompt.value, size.value, style);
             interaction.followUp(response);
         } catch (error) {
             console.log(error);
