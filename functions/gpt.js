@@ -17,7 +17,7 @@ async function gpt(prompt, messageLogs, clientUserName, interactionUserName){
                          Type your response and dont start with Neuron: 
                    `,
             temperature: 0.5,
-            max_tokens: 200
+            max_tokens: 250
         });
 
         if (completion.data.choices[0].finish_reason === 'length') {
@@ -32,4 +32,27 @@ async function gpt(prompt, messageLogs, clientUserName, interactionUserName){
     }
 }
 
-module.exports = {gpt};
+async function serverGpt(prompt) {
+    try{
+        const completion = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: `    Neuron is the most friendly AI Discord bot created by Anom.
+                         ${prompt}
+                   `,
+            temperature: 0.5,
+            max_tokens: 250
+        });
+
+        if (completion.data.choices[0].finish_reason === 'length') {
+            return completion.data.choices[0].text + '...*it costs a lot for me to speak more than this.*'
+          } else {
+            return completion.data.choices[0].text;
+        }
+        
+    }catch(error){
+        console.log(error);
+        return error;
+    }
+}
+
+module.exports = {gpt, serverGpt};

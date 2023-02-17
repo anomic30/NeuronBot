@@ -2,14 +2,12 @@ require("dotenv").config();
 const {
     Client,
     IntentsBitField,
-    ActivityType
+    ActivityType,
+    Collection
 } = require("discord.js");
-const {
-    gpt
-} = require("./functions/gpt.js");
-const {
-    dalle
-} = require("./functions/dalle.js");
+
+const path = require("path");
+const fs = require("fs");
 
 const client = new Client({
     intents: [
@@ -20,124 +18,40 @@ const client = new Client({
     ]
 });
 
-client.on("ready", () => {
-    console.log("Neuron is online!");
-    client.user.setActivity("/ask", {
-        type: ActivityType.Listening
-    });
-})
+//load the events files on startup
+const eventsPath = path.join(__dirname, "events");
+const eventFiles = fs
+    .readdirSync(eventsPath)
+    .filter(file => file.endsWith(".js"));
 
-// client.on("messageCreate", async (message) => {
-//     if (message.author.bot) return;
-//     if (message.channelId !== "894190158381985814") return;
-//     if (message.content.startsWith("!")) return;
+for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
 
-//     let previousMessage = await message.channel.messages.fetch({ limit: 25 });
-//     previousMessage.sort((a, b) => a - b);
-
-//     let conversationLog = "";
-//     previousMessage.forEach((msg) => {
-//         if (msg.author.bot) {
-//             conversationLog += `${client.user.username}: ${msg.content}\n`;
-//         } else {
-//             conversationLog += `${msg.author.username}: ${msg.content}\n`;
-//         }
-//     });
-
-//     console.log(conversationLog)
-
-//     // try {
-//     //     await message.channel.sendTyping();
-
-//     //     const completion = await openai.createCompletion({
-//     //         model: "text-davinci-003",
-//     //         prompt: `${client.user.username} is a gpt3 bot.
-//     //                  ${client.user.username}: Hello, how can I help you?
-//     //                  ${conversationLog}
-//     //                  ${client.user.username}:
-//     //         `,
-//     //         temperature: 0.5,
-//     //         max_tokens: 256
-//     //     });
-//     //     // console.log(resp.data);
-//     //     message.reply(completion.data.choices[0].text);
-//     // }catch(error){
-//     //     console.log(error);
-//     //     return error;
-//     // }
-// })
-
-client.on("interactionCreate", async (interaction) => {
-    if (!interaction.isChatInputCommand()) return;
-    if (interaction.channelId !== "894190158381985814" || interaction.channelId !== "755026338016002103") {
-        interaction.reply("Sorry you are now allowed to use me in this channel now :)\nI'm still in the development stage!\n\n If you still want to use me, please contact my creator, Anom");
-        return;
-    };
-
-    if (interaction.commandName === "ask") {
-
-        //fetch only the last 25 interactions where the bot has replied to the interaction user
-        let messageLogs = await interaction.channel.messages.fetch({
-            limit: 25
-        });
-        console.log(messageLogs);
-        messageLogs.sort((a, b) => a - b);
-        messageLogs = messageLogs.filter((message) => {
-            if (message.author.id === interaction.user.id || message.author.id === client.user.id) {
-                if (message.length > 200) {
-                    return false;
-                }
-                return true;
-            }
-            return false;
-        });
-
-        let conversationLog = "";
-        messageLogs.forEach((msg) => {
-            if (msg.author.bot) {
-                conversationLog += `${client.user.username}: ${msg.content}\n`;
-            } else {
-                conversationLog += `${interaction.user.username}: ${msg.content}\n`;
-            }
-        });
-
-        try {
-            interaction.deferReply();
-            const prompt = interaction.options.get("prompt");
-            if (prompt.length > 150) {
-                interaction.reply("Thats too long! Can you please summarize it?");
-                return;
-            }
-            const response = await gpt(prompt.value, conversationLog, client.user.username, interaction.user.username);
-            console.log(conversationLog);
-            interaction.followUp(response);
-        } catch (error) {
-            console.log(error);
-            interaction.followUp("Something went wrong! Please try again later.");
-        }
-    } else if (interaction.commandName === "help") {
-        interaction.reply("Hey! I am Neuron, an advanced AI bot created by Anom. I am still in the development stage, so please be patient with me :)\n\nList of commands available now:\n `/ask` - Ask me anything!I will try to answer your question as best as I can.\n`/draw` - Draw something using a description!I will try to draw it as best as I can.");
-    } else if (interaction.commandName === "draw") {
-        try {
-            interaction.deferReply();
-            const prompt = interaction.options.get("description");
-            const size = interaction.options.get("size");
-            const style = interaction.options.get("style");
-            if (prompt.length < 15) {
-                interaction.followUp("Thats too short! Can you explain it a bit more?");
-                return;
-            }
-            if (prompt.length > 150) {
-                interaction.followUp("Thats too long! Can you please summarize it?");
-                return;
-            }
-            const response = await dalle(prompt.value, size.value, style);
-            interaction.followUp(response);
-        } catch (error) {
-            console.log(error);
-            interaction.followUp("Something went wrong! Please try again later.");
-        }
+    if (event.once) {
+        client.once(event.name, (...args)=> event.execute(...args));
+    } else {
+        client.on(event.name, (...args)=> event.execute(...args));
     }
-})
+}
+
+//load the commands files on startup
+client.commands = new Collection();
+const commandsPath = path.join(__dirname, "commands");
+const commandFiles = fs
+    .readdirSync(commandsPath)
+    .filter(file => file.endsWith(".js"));
+for (const file of commandFiles) {
+    const filePath = path.join(commandsPath, file);
+    const command = require(filePath);
+    if ("data" in command && "execute" in command) {
+        client.commands.set(command.data.name, command);
+    } else {
+        console.log(`❌ ${file} is not a valid command!`);
+    }
+}
 
 client.login(process.env.TOKEN);
+
+//Export the client
+module.exports = { client };

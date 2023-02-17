@@ -92,6 +92,10 @@ const commands = [
     {
         name: "help",
         description: "How to use Neuron?"
+    },
+    {
+        name: "ping",
+        description: "Shows Neuron's latency"
     }
 ];
 
