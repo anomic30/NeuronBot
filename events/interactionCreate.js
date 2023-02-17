@@ -2,7 +2,7 @@ const { Events } = require("discord.js");
  
 module.exports = {
     name: Events.InteractionCreate,
-    async execute(interaction) {
+    async execute(interaction, client) {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.channelId !== "894190158381985814" && interaction.channelId !== "755026338016002103") {
@@ -20,7 +20,7 @@ module.exports = {
         }
  
         try {
-            await command.execute(interaction);
+            await command.execute(interaction, client);
         } catch (error) {
             console.error(`Error executing ${interaction.commandName}`);
             console.error(error);

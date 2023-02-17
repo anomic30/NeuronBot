@@ -8,7 +8,7 @@ module.exports = {
         .setDescription("Ask me anything that comes to your mind.")
         .addStringOption(option => option.setName("prompt").setDescription("What do you want to ask me?").setRequired(true)),
 
-    async execute(interaction) {
+    async execute(interaction, client) {
         try {
             await interaction.deferReply();
             const prompt = interaction.options.get("prompt");

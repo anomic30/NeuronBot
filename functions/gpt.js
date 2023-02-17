@@ -36,7 +36,7 @@ async function serverGpt(prompt) {
     try{
         const completion = await openai.createCompletion({
             model: "text-davinci-003",
-            prompt: `    Neuron is the most friendly AI Discord bot created by Anom.
+            prompt: `    Neuron is the most friendly AI Discord bot created by <@468996591219507200>.
                          ${prompt}
                    `,
             temperature: 0.5,

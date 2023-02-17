@@ -60,6 +60,7 @@ module.exports = {
             const prompt = interaction.options.get("description");
             const size = interaction.options.get("size");
             const style = interaction.options.get("style");
+            
             if (prompt.length < 15) {
                 interaction.followUp("Thats too short! Can you explain it a bit more?");
                 return;
