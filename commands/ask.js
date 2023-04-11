@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const client = require("../index");
-const { serverGpt } = require("../functions/gpt");
+const { serverGpt, newGpt } = require("../functions/gpt");
+const { checkChat } = require("../utils/useBot");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,13 +12,23 @@ module.exports = {
     async execute(interaction, client) {
         try {
             await interaction.deferReply();
-            const prompt = interaction.options.get("prompt");
-            if (prompt.length > 150) {
-                interaction.reply("Thats too long! Can you please summarize it?");
+            const prompt = await interaction.options.get("prompt");
+
+            if (prompt.value.length > 150) {
+                await interaction.followUp("Thats too long! Can you please summarize it?");
                 return;
             }
-            const response = await serverGpt(prompt.value);
+
+            let {chatCredits, canUse} = await checkChat(interaction.user.id);
+
+            if (!canUse) {
+                interaction.followUp({content:"You have exhausted your weekly credits. Wait for the weekly credits to be refilled!", ephemeral: true});
+                return;
+            }
+
+            const response = await newGpt(prompt.value);
             await interaction.followUp(response);
+            await interaction.followUp({content: `You have ${chatCredits} chat credits left.`, ephemeral: true});
         } catch (error) {
             console.log(error);
             await interaction.followUp("Something went wrong! Please try again later.");

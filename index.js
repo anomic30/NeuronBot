@@ -5,6 +5,7 @@ const {
     ActivityType,
     Collection
 } = require("discord.js");
+const {connectToDatabase} = require("./db");
 
 const path = require("path");
 const fs = require("fs");
@@ -51,7 +52,9 @@ for (const file of commandFiles) {
     }
 }
 
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN).then(() => {
+    connectToDatabase();
+});
 
 //Export the client
 module.exports = { client };

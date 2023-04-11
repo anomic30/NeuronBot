@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { dalle } = require("../functions/dalle.js")
+const { dalle } = require("../functions/dalle.js");
+const { checkDalle } = require("../utils/useBot");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -60,9 +61,16 @@ module.exports = {
             const prompt = interaction.options.get("description");
             const size = interaction.options.get("size");
             const style = interaction.options.get("style");
+
+            let { dalleCredits, canUse } = await checkDalle(interaction.user.id);
+            
+            if (!canUse) {
+                interaction.followUp({content:"You have exhausted your weekly credits. Wait for the weekly credits to be refilled!", ephemeral: true});
+                return;
+            }
             
             if (prompt.length < 15) {
-                interaction.followUp("Thats too short! Can you explain it a bit more?");
+                await interaction.followUp("Thats too short! Can you explain it a bit more?");
                 return;
             }
             if (prompt.length > 150) {
@@ -70,7 +78,8 @@ module.exports = {
                 return;
             }
             const response = await dalle(prompt.value, size.value, style);
-            interaction.followUp(response);
+            await interaction.followUp(response);
+            await interaction.followUp({content: `You have ${dalleCredits} image credits left.`, ephemeral: true});
         } catch (error) {
             console.log(error);
             interaction.followUp("Something went wrong! Please try again later.");

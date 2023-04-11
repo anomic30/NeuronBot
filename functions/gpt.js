@@ -39,7 +39,7 @@ async function serverGpt(prompt) {
             prompt: `    Neuron is the most friendly AI Discord bot created by <@468996591219507200>.
                          ${prompt}
                    `,
-            temperature: 0.5,
+            temperature: 0.7,
             max_tokens: 250
         });
 
@@ -55,4 +55,28 @@ async function serverGpt(prompt) {
     }
 }
 
-module.exports = {gpt, serverGpt};
+async function newGpt(prompt) {
+    try {
+        let conversationLog = [{ role: "system", content: "You are a funny, intelligent and a friendly Discord chat bot named Neuron. You are being developed by <@468996591219507200>" }];
+        
+        conversationLog.push({ role: "user", content: prompt });
+
+        const completion = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: conversationLog,
+            temperature: 0.5,
+            max_tokens: 1000
+        })
+
+        if (completion.data.choices[0].finish_reason === 'length') {
+            return completion.data.choices[0].message + '...*it costs a lot for me to speak more than this.*'
+          } else {
+            return completion.data.choices[0].message;
+        }
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+module.exports = {gpt, serverGpt, newGpt};
