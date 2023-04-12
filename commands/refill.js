@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
 const User = require("../models/user.model");
 
 module.exports = {
@@ -24,8 +24,8 @@ module.exports = {
             const refillType = interaction.options.get("type");
             const amount = interaction.options.get("amount");
 
-            if (interaction.user.id !== process.env.ADMIN_ID) {
-                await interaction.reply("😏 You thought you will be able to use this command, nah not today...");
+            if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+                await interaction.reply("👀 Only admins of this server can execute this command...");
                 return;
             }
 

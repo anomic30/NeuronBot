@@ -12,7 +12,6 @@ async function dalle(prompt, size, style) {
         prompt = prompt + ` in ${style.value} style`;
     }
     try {
-        console.log(prompt);
         const response = await openai.createImage({
             prompt: prompt,
             n: 1,

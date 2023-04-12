@@ -79,7 +79,7 @@ module.exports = {
             }
             const response = await dalle(prompt.value, size.value, style);
             await interaction.followUp(response);
-            await interaction.followUp({content: `You have ${dalleCredits} image credits left.`, ephemeral: true});
+            await interaction.followUp({content: "You have `" + dalleCredits + "` image credits left.", ephemeral: true});
         } catch (error) {
             console.log(error);
             interaction.followUp("Something went wrong! Please try again later.");

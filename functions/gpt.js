@@ -40,7 +40,7 @@ async function serverGpt(prompt) {
                          ${prompt}
                    `,
             temperature: 0.7,
-            max_tokens: 250
+            max_tokens: 500
         });
 
         if (completion.data.choices[0].finish_reason === 'length') {
