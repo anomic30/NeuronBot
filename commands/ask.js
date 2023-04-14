@@ -15,7 +15,7 @@ module.exports = {
             const prompt = await interaction.options.get("prompt");
             console.log(prompt.value)
 
-            if (prompt.value.length > 150) {
+            if (prompt.value.length > 200) {
                 await interaction.followUp("Thats too long! Can you please summarize it?");
                 return;
             }

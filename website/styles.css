@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    max-height: 100vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+body {
+    max-height: 100vh;
+    font-size: 16px;
+    font-family: 'Lexend', sans-serif;
+    padding: 0px 10px;
+    background-color: #0D0A15;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    position: relative;
+}
+
+nav {
+    height: 5rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-items {
+    padding: 0px 5px;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-items img {
+    height: 1.5rem;
+}
+
+.hero {
+    height: calc(100vh - 10rem);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gradient {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+    height: 100%;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    z-index: -1;
+}
+
+.hero-content {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-logo {
+    height: 10rem;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.sub-title {
+    max-width: 400px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+a{
+    text-decoration: none;
+}
+
+.btn {
+    height: 3rem;
+    background: linear-gradient(90deg, #FB00FF 0%, #00FFC0 100%);
+    border: 1px solid #F5CEFF;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.btn img {
+    height: 1.5rem;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5rem;
+    background-color: #0D0A15;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #fff;
+}
+
+footer a{
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #00FFC0;
+}

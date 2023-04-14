@@ -44,9 +44,9 @@ module.exports = {
             await interaction.deferReply();
 
             if (refillType.value === "chat") {
-                user.chatCredits = amount.value;
+                user.chatCredits += amount.value;
             } else if (refillType.value === "image") {
-                user.imageCredits = amount.value;
+                user.imageCredits += amount.value;
             }
 
             await user.save();
