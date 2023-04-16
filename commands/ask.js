@@ -13,7 +13,7 @@ module.exports = {
         try {
             await interaction.deferReply();
             const prompt = await interaction.options.get("prompt");
-            console.log(prompt.value)
+            // console.log(prompt.value)
 
             if (prompt.value.length > 200) {
                 await interaction.followUp("Thats too long! Can you please summarize it?");
@@ -28,7 +28,7 @@ module.exports = {
             }
 
             const response = await serverGpt(prompt.value);
-            console.log(response);
+            // console.log(response);
             await interaction.followUp(response);
             await interaction.followUp({content: "You have `" + chatCredits + "` chat credits left.", ephemeral: true});
         } catch (error) {

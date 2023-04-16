@@ -17,7 +17,6 @@ body {
     font-family: 'Lexend', sans-serif;
     padding: 0px 10px;
     background-color: #0D0A15;
-    overflow-y: hidden;
     overflow-x: hidden;
     position: relative;
 }
@@ -126,7 +125,6 @@ footer {
     align-items: center;
     justify-content: center;
     height: 5rem;
-    background-color: #0D0A15;
     font-size: 0.8rem;
     font-weight: 400;
     color: #fff;
