@@ -64,7 +64,7 @@ async function newGpt(prompt) {
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: conversationLog,
-            temperature: 0.5,
+            temperature: 0.7,
             max_tokens: 1000
         })
 

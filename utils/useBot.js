@@ -10,6 +10,7 @@ async function checkChat(userId) {
             chatCredits: 20,
             dalleCredits: 10,
             lastRefillDate: new Date(),
+            images: [],
         });
 
         await newUser.save();

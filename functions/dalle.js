@@ -14,10 +14,10 @@ async function dalle(prompt, size, style) {
     try {
         const response = await openai.createImage({
             prompt: prompt,
-            n: 1,
+            n: 4,
             size: size,
         })
-        return response.data.data[0].url;
+        return response.data.data;
     } catch (error) {
         console.log(error);
         return error;

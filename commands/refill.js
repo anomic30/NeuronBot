@@ -46,7 +46,7 @@ module.exports = {
             if (refillType.value === "chat") {
                 user.chatCredits += amount.value;
             } else if (refillType.value === "image") {
-                user.imageCredits += amount.value;
+                user.dalleCredits += amount.value;
             }
 
             await user.save();

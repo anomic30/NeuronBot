@@ -1,6 +1,9 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { dalle } = require("../functions/dalle.js");
 const { checkDalle } = require("../utils/useBot");
+const { uploadArrayToIpfs } = require("../functions/ipfs.js");
+const { generateImageEmbed } = require("../utils/getEmbeds.js");
+const { saveImagesToDatabase } = require("../utils/saveImages.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -78,8 +81,14 @@ module.exports = {
                 return;
             }
             const response = await dalle(prompt.value, size.value, style);
-            await interaction.followUp(response);
-            await interaction.followUp({content: "You have `" + dalleCredits + "` image credits left.", ephemeral: true});
+            console.log(response);
+            const ipfsResponse = await uploadArrayToIpfs(response);
+            console.log(ipfsResponse);
+            const embeds = generateImageEmbed(ipfsResponse);
+            await interaction.followUp({ embeds: embeds });
+            await interaction.followUp({ content: "You have `" + dalleCredits + "` image credits left.", ephemeral: true });
+            
+            await saveImagesToDatabase(interaction.user.id, ipfsResponse);
         } catch (error) {
             console.log(error);
             interaction.followUp("Something went wrong! Please try again later.");
