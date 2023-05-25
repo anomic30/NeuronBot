@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "deploy": "node deployCommands.js",
+    "deployGlobal": "npm run deploy -- --global",
+    "deployGuild": "npm run deploy -- --guild",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "anomic30",
