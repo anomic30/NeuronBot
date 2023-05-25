@@ -7,14 +7,14 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-async function dalle(prompt, size, style) {
+async function dalle(prompt, size, total, style) {
     if (style) {
         prompt = prompt + ` in ${style.value} style`;
     }
     try {
         const response = await openai.createImage({
             prompt: prompt,
-            n: 4,
+            n: total?.value? total.value : 4,
             size: size,
         })
         return response.data.data;

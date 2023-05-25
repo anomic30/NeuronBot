@@ -39,7 +39,7 @@ async function serverGpt(prompt) {
             prompt: `    Neuron is the most friendly AI Discord bot created by <@468996591219507200>.
                          ${prompt}
                    `,
-            temperature: 0.7,
+            temperature: 0.8,
             max_tokens: 500
         });
 
@@ -64,7 +64,7 @@ async function newGpt(prompt) {
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: conversationLog,
-            temperature: 0.7,
+            temperature: 0.8,
             max_tokens: 1000
         })
 

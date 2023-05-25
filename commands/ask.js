@@ -27,7 +27,7 @@ module.exports = {
                 return;
             }
 
-            const response = await serverGpt(prompt.value);
+            const response = await newGpt(prompt.value);
             // console.log(response);
             await interaction.followUp(response);
             await interaction.followUp({content: "You have `" + chatCredits + "` chat credits left.", ephemeral: true});

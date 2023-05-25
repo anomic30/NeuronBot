@@ -17,7 +17,7 @@ module.exports = {
             });
             if (!user) {
                 await interaction.reply({
-                    content: "You are not in the database, because you haven't used any commands yet!",
+                    content: "Uh oh! It seems you haven't used any ask/draw command yet, so you're not in the database.",
                     ephemeral: true
                 });
                 return;
