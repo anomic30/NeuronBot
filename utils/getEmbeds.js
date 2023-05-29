@@ -5,7 +5,6 @@ const {
 const INFURA_PUBLIC_GATEWAY = process.env.INFURA_PUBLIC_GATEWAY;
 
 const titles = [
-    "Here's your images!",
     "Hope you like it!",
     "Here you go!",
     "Enjoy!",

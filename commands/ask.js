@@ -26,7 +26,7 @@ module.exports = {
                 interaction.followUp({content:"You have exhausted your weekly credits. Wait for the weekly credits to be refilled!", ephemeral: true});
                 return;
             }
-
+            
             const response = await newGpt(prompt.value);
             // console.log(response);
             await interaction.followUp(response);
