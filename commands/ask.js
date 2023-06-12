@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const client = require("../index");
 const { serverGpt, newGpt } = require("../functions/gpt");
+const { chatBard, textBard} = require("../functions/bard");
 const { checkChat } = require("../utils/useBot");
 
 module.exports = {
@@ -27,7 +28,11 @@ module.exports = {
                 return;
             }
             
-            const response = await newGpt(prompt.value);
+            const response = await textBard(prompt.value);
+            if(!response) {
+                await interaction.followUp("Something went wrong! Please try again later.");
+                return;
+            }
             // console.log(response);
             await interaction.followUp(response);
             await interaction.followUp({content: "You have `" + chatCredits + "` chat credits left.", ephemeral: true});

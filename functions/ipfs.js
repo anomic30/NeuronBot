@@ -13,7 +13,7 @@ const projectId = process.env.INFURA_PROJECT_ID;
 const projectSecret = process.env.INFURA_PROJECT_SECRET;
 
 const auth = `Basic ${Buffer.from(`${projectId}:${projectSecret}`).toString(
-  'base64'
+    'base64'
 )}`;
 
 const ipfs = create({
@@ -50,7 +50,11 @@ async function uploadArrayToIpfs(array) {
     try {
         let result = [];
         for (let i = 0; i < array.length; i++) {
-            result.push(await uploadToIpfs(array[i].url));
+            if (array[i].hasOwnProperty('url')){
+                result.push(await uploadToIpfs(array[i].url));
+            } else {
+                result.push(await uploadToIpfs(array[i].uri));
+            }
         }
         return result;
     } catch (err) {

@@ -78,8 +78,14 @@ async function newGpt(prompt) {
             return completion.data.choices[0].message;
         }
     } catch (error) {
-        console.log(error);
-        return error;
+        // console.log(error);
+        // return error;
+        if (error.response) {
+            console.log(error.response.status);
+            console.log(error.response.data);
+        } else {
+            console.log(error.message);
+        }
     }
 }
 

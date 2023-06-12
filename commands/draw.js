@@ -1,21 +1,10 @@
-const {
-    SlashCommandBuilder
-} = require("discord.js");
-const {
-    dalle
-} = require("../functions/dalle.js");
-const {
-    checkDalle
-} = require("../utils/useBot");
-const {
-    uploadArrayToIpfs
-} = require("../functions/ipfs.js");
-const {
-    generateImageEmbed
-} = require("../utils/getEmbeds.js");
-const {
-    saveImagesToDatabase
-} = require("../utils/saveImages.js");
+const {SlashCommandBuilder} = require("discord.js");
+const {dalle} = require("../functions/dalle.js");
+const {checkDalle} = require("../utils/useBot");
+const {uploadArrayToIpfs} = require("../functions/ipfs.js");
+const {generateImageEmbed} = require("../utils/getEmbeds.js");
+const {saveImagesToDatabase} = require("../utils/saveImages.js");
+const {leap} = require("../functions/leap.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -30,8 +19,8 @@ module.exports = {
                 name: "512x512",
                 value: "512x512"
             }, {
-                name: "1024x1024",
-                value: "1024x1024"
+                name: "1024x576",
+                value: "1024x576"
             }))
         .addIntegerOption(option => option.setName("total").setDescription("Total numbers of images")
             .addChoices({
@@ -109,7 +98,7 @@ module.exports = {
                 interaction.followUp("Thats too long! Can you please summarize it?");
                 return;
             }
-            const response = await dalle(prompt.value, size.value, total, style);
+            const response = await leap(prompt.value, size.value, total, style);
             // console.log(response);
             const ipfsResponse = await uploadArrayToIpfs(response);
             // console.log(ipfsResponse);

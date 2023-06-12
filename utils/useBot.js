@@ -8,7 +8,7 @@ async function checkChat(userId) {
         const newUser = new User({
             userId,
             chatCredits: 20,
-            dalleCredits: 10,
+            dalleCredits: 4,
             lastRefillDate: new Date(),
             images: [],
         });
@@ -32,7 +32,7 @@ async function checkChat(userId) {
     if (timeSinceLastRefill >= oneWeekInMillis) {
         // Refill the credits and update the lastRefillDate
         user.chatCredits = 20;
-        user.dalleCredits = 10;
+        user.dalleCredits = 4;
         user.lastRefillDate = new Date();
         await user.save();
     }

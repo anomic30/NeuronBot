@@ -14,8 +14,11 @@
   "author": "anomic30",
   "license": "ISC",
   "dependencies": {
+    "@google-ai/generativelanguage": "^0.2.0",
+    "@leap-ai/sdk": "^0.0.119",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
+    "google-auth-library": "^8.8.0",
     "googlethis": "^1.7.1",
     "ipfs-http-client": "^56.0.3",
     "mongoose": "^7.0.3",
