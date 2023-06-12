@@ -39,7 +39,7 @@ Required API keys from the following services:
 
 * [OpenAI](https://beta.openai.com/) 
 * [Infura IPFS](https://infura.io/)
-* [Bard](https://bardlabs.com/)
+* [Bard](https://makersuite.google.com/app/home)
 * [Leap AI](https://tryleap.ai/)
 * [Discord](https://discord.com/developers/applications)
 * [MongoDB](https://www.mongodb.com/)
@@ -62,5 +62,3 @@ Required API keys from the following services:
     ```
 5. Invite the bot to your server
 6. Enjoy!
-
-
