@@ -16,7 +16,7 @@ const textClient = new TextServiceClient({
 
 async function chatBard(prompt) {
     return new Promise(async (resolve, reject) => {
-        let initialPrompt = "In less than 250 words, ";
+        let initialPrompt = "In less than 1500 characters, as concise as possible, ";
         try {
             const result = await chatClient.generateMessage({
                 model: CHAT_MODEL_NAME,
@@ -24,7 +24,7 @@ async function chatBard(prompt) {
                 candidateCount: 1,
                 maxOutputTokens: 256,
                 prompt: {
-                    context: "You are a Discord chatbot called Neuron, designed by Mav to be a friendly and helpful companion. Max response length should be less than 250 words",
+                    context: "You are a Discord chatbot called Neuron, designed by Mav to be a friendly and helpful companion. Max response length should be less than 1500 characters",
                     messages: [{ author: "user", content: initialPrompt+prompt }],
                 },
             });

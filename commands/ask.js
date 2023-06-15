@@ -28,7 +28,7 @@ module.exports = {
                 return;
             }
             
-            const response = await textBard(prompt.value);
+            const response = await newGpt(prompt.value);
             if(!response) {
                 await interaction.followUp("Something went wrong! Please try again later.");
                 return;
